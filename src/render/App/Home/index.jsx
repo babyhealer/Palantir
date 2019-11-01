@@ -3,9 +3,12 @@ import { ipcRenderer } from 'electron';
 
 import RecommendItem from './components/Recommend';
 import HotRecommendItem from './components/HotRecommend';
+import HomeHeader from './components/Header';
+import HomeContent from './components/Content';
 
 import { clearSession } from '../../utills/API/index';
 import './index.less'
+import HomeSider from './components/Sider';
 
 export default class App extends React.PureComponent {
   constructor(props) {
@@ -15,7 +18,8 @@ export default class App extends React.PureComponent {
       hotRecommendList: [1, 2, 3, 4],
       imgSrc: require('../assets/image/4.jpeg'),
       imgSrc1: require('../assets/image/home_sample.jpg'),
-      starsImg: require('../assets/image/Stars.png')
+      starsImg: require('../assets/image/Stars.png'),
+      listImage: require('../assets/image/manage.png')
     };
   }
   render() {
@@ -32,7 +36,7 @@ export default class App extends React.PureComponent {
 
           res.push(<div className="liveScan">
             <img src={imgSrc} className="scanImg"/>
-            <p>视频标题</p>
+            <p className='title'>视频标题</p>
             <div>
               <div className="">
                 <img src={imgSrc} className="icon"/>
@@ -53,7 +57,7 @@ export default class App extends React.PureComponent {
     return (
       <div className="container">
         <nav>
-            <img src={ this.state.starsImg } className="classify"/>
+            <img src={ this.state.listImage } className="classify"/>
             <ul>
               <li >
                 <img src={ this.state.starsImg } className="stars"/>
@@ -75,14 +79,14 @@ export default class App extends React.PureComponent {
             </div>
             <div className="recommend-chunk">
               <div className="recommend-list">
-                {recommendList.map(() => <RecommendItem imgSrc={imgSrc1} />)}
+                {recommendList.map((item,index) => <RecommendItem imgSrc={imgSrc1} key={index} />)}
               </div>
             </div>
           </div>
           <div className="home-hot-recommend">
             <div className="home-content-header">
               <h3 className="title">热门推荐</h3>
-              <span className="more">更多>></span>
+              <span className="more">更多 >></span>
             </div>
             <div className="home-hot-recommend-content">
               <div className="home-hot-recommend-list">
@@ -90,8 +94,26 @@ export default class App extends React.PureComponent {
               </div>
             </div>
           </div>
-          <div className="home-life">
-            { liveScan(20) }
+          <div className="home-life home-chunk">
+            <div className="home-chunk-l">
+              <HomeHeader title="生活" />
+              <HomeContent />
+            </div>
+            <div className="home-chunk-r">
+              <HomeSider />
+            </div>
+          </div>
+          <div className="home-game home-chunk">
+            <div className="home-chunk-l">
+              <HomeHeader title="游戏" />
+              <HomeContent />
+            </div>
+            <div className="home-chunk-r">
+              <HomeSider />
+            </div>
+          </div>
+          <div className="video-list">
+           { liveScan(20) }
           </div>
           <h1>Home</h1>
           <button
@@ -103,7 +125,7 @@ export default class App extends React.PureComponent {
                   alert('退出登陆成功');
                 }
               }
-              ipcRenderer.send('Enter-Home', { width: 342, height: 417 });
+              ipcRenderer.send('Enter-Home', { width: 300, height: 450 });
             }}
           >
             返回登陆
