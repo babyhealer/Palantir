@@ -4,13 +4,14 @@ import './index.less'
 import Header from '../Header';
 import Home from './index';
 import Live from '../Live';
-import Uc from '../Uc';
+import MoreVideo from '../MoreVideo';
+import Uc from '../../Uc';
 
 export default class HomeRoute extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      imgSrc: require('../assets/image/4.jpeg'),
+      imgSrc: require('../../assets/image/4.jpeg'), 
     };
   }
   render() {
@@ -19,6 +20,7 @@ export default class HomeRoute extends React.PureComponent {
         <Header {...this.props}/>
         <Switch>
           <Route exact path="/home" component={Home} />
+          <Route path="/home/more_video" component={MoreVideo} />
           <Route path="/home/live" component={Live} />
           <Route path="/home/uc" component={Uc} />
         </Switch>
